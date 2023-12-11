@@ -84,6 +84,9 @@
             this.listBoxTasks.Size = new System.Drawing.Size(300, 200);
             this.listBoxTasks.SelectedIndexChanged += new System.EventHandler(this.listBoxTasks_SelectedIndexChanged);
 
+
+
+
             // ToDoListForm
             this.ClientSize = new System.Drawing.Size(400, 380);
             this.Controls.Add(this.textBoxTask);

@@ -6,6 +6,8 @@ namespace ToDoList
     {
         private List<Task> tasks = new List<Task>();
         private List<System.Timers.Timer> timers = new List<System.Timers.Timer>();
+        string fileName = @"C:\c#-projekt\todolist\todolist.txt";
+
 
         public Form1()
         {
@@ -16,7 +18,6 @@ namespace ToDoList
 
         private void LoadTasks()
         {
-            string fileName = @"C:\";
             if (File.Exists(fileName))
             {
                 string[] lines = File.ReadAllLines(fileName);
@@ -36,7 +37,8 @@ namespace ToDoList
                     tasks.Add(task);
                     listBoxTasks.Items.Add(task.Title);
                 }
-            }
+            } else File.Create(fileName);
+
             SetupTimers();
         }
 
