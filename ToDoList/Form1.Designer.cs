@@ -28,93 +28,114 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
-            this.textBoxTask = new System.Windows.Forms.TextBox();
-            this.dateTimePickerDeadline = new System.Windows.Forms.DateTimePicker();
-            this.labelTask = new System.Windows.Forms.Label();
-            this.labelDeadline = new System.Windows.Forms.Label();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonRemove = new System.Windows.Forms.Button();
-            this.buttonEdit = new System.Windows.Forms.Button();
-            this.listBoxTasks = new System.Windows.Forms.ListBox();
-            this.SuspendLayout();
-
+            textBoxTask = new TextBox();
+            dateTimePickerDeadline = new DateTimePicker();
+            labelTask = new Label();
+            labelDeadline = new Label();
+            buttonAdd = new Button();
+            buttonRemove = new Button();
+            buttonEdit = new Button();
+            listBoxTasks = new ListBox();
+            SuspendLayout();
+            // 
             // textBoxTask
-            this.textBoxTask.Location = new System.Drawing.Point(150, 30);
-            this.textBoxTask.Size = new System.Drawing.Size(200, 20);
-
+            // 
+            textBoxTask.Location = new Point(150, 30);
+            textBoxTask.Name = "textBoxTask";
+            textBoxTask.Size = new Size(200, 31);
+            textBoxTask.TabIndex = 0;
+            // 
             // dateTimePickerDeadline
-            this.dateTimePickerDeadline.Location = new System.Drawing.Point(150, 70);
-            this.dateTimePickerDeadline.Size = new System.Drawing.Size(200, 20);
-
+            // 
+            dateTimePickerDeadline.CustomFormat = "dd MMM HH:mm";
+            dateTimePickerDeadline.Format = DateTimePickerFormat.Custom;
+            dateTimePickerDeadline.Location = new Point(150, 70);
+            dateTimePickerDeadline.Name = "dateTimePickerDeadline";
+            dateTimePickerDeadline.Size = new Size(200, 31);
+            dateTimePickerDeadline.TabIndex = 1;
+            // 
             // labelTask
-            this.labelTask.AutoSize = true;
-            this.labelTask.Location = new System.Drawing.Point(50, 30);
-            this.labelTask.Text = "Task:";
-
+            // 
+            labelTask.AutoSize = true;
+            labelTask.Location = new Point(50, 30);
+            labelTask.Name = "labelTask";
+            labelTask.Size = new Size(49, 25);
+            labelTask.TabIndex = 2;
+            labelTask.Text = "Task:";
+            // 
             // labelDeadline
-            this.labelDeadline.AutoSize = true;
-            this.labelDeadline.Location = new System.Drawing.Point(50, 70);
-            this.labelDeadline.Text = "Deadline:";
-
+            // 
+            labelDeadline.AutoSize = true;
+            labelDeadline.Location = new Point(50, 70);
+            labelDeadline.Name = "labelDeadline";
+            labelDeadline.Size = new Size(85, 25);
+            labelDeadline.TabIndex = 3;
+            labelDeadline.Text = "Deadline:";
+            // 
             // buttonAdd
-            this.buttonAdd.Location = new System.Drawing.Point(50, 110);
-            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdd.Text = "Add";
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-
+            // 
+            buttonAdd.Location = new Point(50, 110);
+            buttonAdd.Name = "buttonAdd";
+            buttonAdd.Size = new Size(75, 35);
+            buttonAdd.TabIndex = 4;
+            buttonAdd.Text = "Add";
+            buttonAdd.Click += buttonAdd_Click;
+            // 
             // buttonRemove
-            this.buttonRemove.Location = new System.Drawing.Point(150, 110);
-            this.buttonRemove.Size = new System.Drawing.Size(75, 23);
-            this.buttonRemove.Text = "Remove";
-            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
-
+            // 
+            buttonRemove.Location = new Point(150, 110);
+            buttonRemove.Name = "buttonRemove";
+            buttonRemove.Size = new Size(75, 35);
+            buttonRemove.TabIndex = 5;
+            buttonRemove.Text = "Remove";
+            buttonRemove.Click += buttonRemove_Click;
+            // 
             // buttonEdit
-            this.buttonEdit.Location = new System.Drawing.Point(250, 110);
-            this.buttonEdit.Size = new System.Drawing.Size(75, 23);
-            this.buttonEdit.Text = "Edit";
-            this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
-
+            // 
+            buttonEdit.Location = new Point(250, 110);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(75, 35);
+            buttonEdit.TabIndex = 6;
+            buttonEdit.Text = "Edit";
+            buttonEdit.Click += buttonEdit_Click;
+            // 
             // listBoxTasks
-            this.listBoxTasks.FormattingEnabled = true;
-            this.listBoxTasks.Location = new System.Drawing.Point(50, 150);
-            this.listBoxTasks.Size = new System.Drawing.Size(300, 200);
-            this.listBoxTasks.SelectedIndexChanged += new System.EventHandler(this.listBoxTasks_SelectedIndexChanged);
-
-
-
-
-            // ToDoListForm
-            this.ClientSize = new System.Drawing.Size(400, 380);
-            this.Controls.Add(this.textBoxTask);
-            this.Controls.Add(this.dateTimePickerDeadline);
-            this.Controls.Add(this.labelTask);
-            this.Controls.Add(this.labelDeadline);
-            this.Controls.Add(this.buttonAdd);
-            this.Controls.Add(this.buttonRemove);
-            this.Controls.Add(this.buttonEdit);
-            this.Controls.Add(this.listBoxTasks);
-            this.Name = "ToDoListForm";
-            this.Text = "To-Do List Manager";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-            this.dateTimePickerDeadline.CustomFormat = "dd MMM HH:mm";
-            this.dateTimePickerDeadline.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerDeadline.Location = new System.Drawing.Point(150, 70);
-            this.dateTimePickerDeadline.Size = new System.Drawing.Size(200, 20);
+            // 
+            listBoxTasks.FormattingEnabled = true;
+            listBoxTasks.ItemHeight = 25;
+            listBoxTasks.Location = new Point(50, 168);
+            listBoxTasks.Name = "listBoxTasks";
+            listBoxTasks.Size = new Size(300, 179);
+            listBoxTasks.TabIndex = 7;
+            listBoxTasks.SelectedIndexChanged += listBoxTasks_SelectedIndexChanged;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(400, 380);
+            Controls.Add(textBoxTask);
+            Controls.Add(dateTimePickerDeadline);
+            Controls.Add(labelTask);
+            Controls.Add(labelDeadline);
+            Controls.Add(buttonAdd);
+            Controls.Add(buttonRemove);
+            Controls.Add(buttonEdit);
+            Controls.Add(listBoxTasks);
+            Name = "Form1";
+            Text = "To-Do List Manager";
+            ResumeLayout(false);
+            PerformLayout();
         }
-        private System.Windows.Forms.TextBox textBoxTask;
-        private System.Windows.Forms.DateTimePicker dateTimePickerDeadline;
-        private System.Windows.Forms.Label labelTask;
-        private System.Windows.Forms.Label labelDeadline;
-        private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button buttonRemove;
-        private System.Windows.Forms.Button buttonEdit;
-        private System.Windows.Forms.ListBox listBoxTasks;
+
+        private TextBox textBoxTask;
+        private DateTimePicker dateTimePickerDeadline;
+        private Label labelTask;
+        private Label labelDeadline;
+        private Button buttonAdd;
+        private Button buttonRemove;
+        private Button buttonEdit;
+        private ListBox listBoxTasks;
         #endregion
     }
 }
