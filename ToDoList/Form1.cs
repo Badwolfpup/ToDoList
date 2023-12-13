@@ -1,5 +1,8 @@
 using System.Windows.Forms;
 using System.Media;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace ToDoList
 {
@@ -8,7 +11,10 @@ namespace ToDoList
         private List<Task> tasks = new List<Task>();
         private List<System.Timers.Timer> timers = new List<System.Timers.Timer>();
         string fileName = @"C:\c#-projekt\todolist\todolist.txt";
-        string folderPath = @"C:\c#-projekt\todolist\Sounds\";
+        string folderPathSound = @"C:\c#-projekt\todolist\Sounds\";
+        string folderPathTextfile = @"C:\c#-projekt\todolist\";
+        private NotifyIcon notifyIcon;
+        private ToolTip toolTip;
 
 
         public Form1()
@@ -16,6 +22,50 @@ namespace ToDoList
             InitializeComponent();
             LoadTasks();
             SetupTimers();
+            InitializeNotifyIcon();
+            CreateTooltip();
+        }
+
+
+        private void CreateTooltip()
+        {
+            toolTip = new ToolTip();
+            toolTip.SetToolTip(buttonAdd, "Lägger till ett alarm");
+            toolTip.ToolTipIcon = ToolTipIcon.Warning;
+            toolTip.ToolTipTitle = "Det här är ett tooltip";
+            toolTip.IsBalloon = true;
+        }
+
+        private void InitializeNotifyIcon()
+        {
+            notifyIcon = new NotifyIcon();
+            notifyIcon.Icon = SystemIcons.Application;
+            notifyIcon.Visible = false;
+            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+        }
+
+        private void NotifyIcon_DoubleClick(object? sender, EventArgs e)
+        {
+            Show();
+            WindowState = FormWindowState.Normal;
+            notifyIcon.Visible = false; 
+        }
+
+        private void Form1_Resize(object? sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Hide();
+                notifyIcon.Visible = true;
+            }
+        }
+
+        private void Form1_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (notifyIcon != null)
+            {
+                notifyIcon.Dispose();
+            }
         }
 
         private void LoadTasks()
@@ -44,18 +94,26 @@ namespace ToDoList
             }
             else
             {
-                using (FileStream fs = File.Create(fileName)) { } 
+                if (Directory.Exists(folderPathTextfile)) 
+                    using (FileStream fs = File.Create(fileName)) { } 
+                else
+                {
+                    Directory.CreateDirectory(folderPathTextfile);
+                    using (FileStream fs = File.Create(fileName)) { }
+                }
             }
-            if (Directory.Exists(folderPath))
+            folderCreated:
+            if (Directory.Exists(folderPathSound))
             {
                 try
                 {
                     // Get all file names in the folder
-                    string[] fileNames = Directory.GetFiles(folderPath);
+                    string[] fileNames = Directory.GetFiles(folderPathSound);
 
                     foreach (string fileName in fileNames)
                     {
                         string file = Path.GetFileName(fileName);
+                        file = file.Remove(file.Length - 4);
                         comboBoxSound.Items.Add(file);
                     }
                     if (comboBoxSound.Items.Count > 0) comboBoxSound.SelectedIndex = 0;
@@ -64,8 +122,14 @@ namespace ToDoList
                 {
                 }
             }
+            else { 
+                Directory.CreateDirectory(folderPathSound);
+                goto folderCreated;
+            }
             SetupTimers();
             if (listBoxTasks.Items.Count > 0) listBoxTasks.SelectedIndex = 0;
+
+
         } 
 
         private void SetupTimers()
@@ -132,8 +196,8 @@ namespace ToDoList
             List<DateTime> alarms = new List<DateTime>();
 
             if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 360) alarms.Add(deadline.AddHours(-6));
-            if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 360) alarms.Add(deadline.AddHours(-3));
-            if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 360) alarms.Add(deadline.AddHours(-1));
+            if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 180) alarms.Add(deadline.AddHours(-3));
+            if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 60) alarms.Add(deadline.AddHours(-1));
             alarms.Add(deadline.AddMilliseconds(-1));
 
             Task newTask = new Task
@@ -141,11 +205,12 @@ namespace ToDoList
                 Title = textBoxTask.Text,
                 Deadline = deadline,
                 Alarms = alarms,
-                Sound = folderPath + comboBoxSound.Text
+                Sound = folderPathSound + comboBoxSound.Text + ".wav"
             };
             tasks.Add(newTask);
             listBoxTasks.Items.Add(newTask);
             listBoxTasks.Items[listBoxTasks.Items.Count - 1] = tasks[listBoxTasks.Items.Count - 1].Title;
+
             SaveTasks();
             SetupTimers();
         }
@@ -156,8 +221,12 @@ namespace ToDoList
             {
                 tasks.RemoveAt(listBoxTasks.SelectedIndex);
                 listBoxTasks.Items.RemoveAt(listBoxTasks.SelectedIndex);
+                dateTimePickerDeadline.Value = DateTime.Now;
                 SaveTasks();
             }
+            textBoxTask.Clear();
+            //if (listBoxTasks.Items.Count > 0) listBoxTasks.SelectedIndex = 0;
+            dateTimePickerDeadline.Value = DateTime.Now;
         }
 
         private void EditTask()
@@ -167,17 +236,21 @@ namespace ToDoList
                 int selectedIndex = listBoxTasks.SelectedIndex;
                 tasks[selectedIndex].Title = textBoxTask.Text;
                 tasks[selectedIndex].Deadline = dateTimePickerDeadline.Value;
-                tasks[selectedIndex].Sound = folderPath + comboBoxSound.Text;
+                tasks[selectedIndex].Sound = folderPathSound + comboBoxSound.Text;
                 tasks[selectedIndex].Alarms.Clear();
                 DateTime deadline = tasks[selectedIndex].Deadline;
-                tasks[selectedIndex].Alarms.AddRange(new List<DateTime>()
-                {
-                    deadline.AddHours(-6),
-                    deadline.AddHours(-3),
-                    deadline.AddHours(-1)
-                }); ;
+
+                if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 360) 
+                    tasks[selectedIndex].Alarms.Add(deadline.AddHours(-6));
+                if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 180) 
+                    tasks[selectedIndex].Alarms.Add(deadline.AddHours(-3));
+                if ((dateTimePickerDeadline.Value - DateTime.Now).Minutes > 60) 
+                    tasks[selectedIndex].Alarms.Add(deadline.AddHours(-1));
+                tasks[selectedIndex].Alarms.Add(deadline.AddMilliseconds(-1));
+                
                 listBoxTasks.Items[selectedIndex] =
                     tasks[selectedIndex].Title;
+                
                 SaveTasks();
             }
         }

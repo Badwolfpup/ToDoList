@@ -101,12 +101,13 @@
             buttonAdd.TabIndex = 6;
             buttonAdd.Text = "Add";
             buttonAdd.Click += buttonAdd_Click;
+
             // 
             // buttonRemove
             // 
-            buttonRemove.Location = new Point(150, 150);
+            buttonRemove.Location = new Point(140, 150);
             buttonRemove.Name = "buttonRemove";
-            buttonRemove.Size = new Size(75, 35);
+            buttonRemove.Size = new Size(90, 35);
             buttonRemove.TabIndex = 7;
             buttonRemove.Text = "Remove";
             buttonRemove.Click += buttonRemove_Click;
@@ -135,6 +136,8 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(400, 480);
+            this.Resize += Form1_Resize;
+            this.FormClosing += Form1_FormClosing;
 
             Controls.Add(textBoxTask);
             Controls.Add(dateTimePickerDeadline);
@@ -151,6 +154,8 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
+
 
         private TextBox textBoxTask;
         private DateTimePicker dateTimePickerDeadline;
