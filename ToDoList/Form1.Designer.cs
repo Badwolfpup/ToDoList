@@ -36,6 +36,8 @@
             buttonRemove = new Button();
             buttonEdit = new Button();
             listBoxTasks = new ListBox();
+            labelSound = new Label();
+            comboBoxSound = new ComboBox();
             SuspendLayout();
             // 
             // textBoxTask
@@ -71,31 +73,50 @@
             labelDeadline.Size = new Size(85, 25);
             labelDeadline.TabIndex = 3;
             labelDeadline.Text = "Deadline:";
+
+            //
+            //labelSound
+            //
+            labelSound.AutoSize = true;
+            labelSound.Location = new Point(50, 110);
+            labelSound.Name = "labelSound";
+            labelSound.Size = new Size(85, 25);
+            labelSound.TabIndex = 4;
+            labelSound.Text = "Sound";
+
+            //
+            //comboBoxSound
             // 
+            comboBoxSound.Location = new Point(150, 110);
+            comboBoxSound.Name = "comboBoxSound";
+            comboBoxSound.Size = new Size(200, 31);
+            comboBoxSound.TabIndex = 5;
+
+            //
             // buttonAdd
             // 
-            buttonAdd.Location = new Point(50, 110);
+            buttonAdd.Location = new Point(50, 150);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Size = new Size(75, 35);
-            buttonAdd.TabIndex = 4;
+            buttonAdd.TabIndex = 6;
             buttonAdd.Text = "Add";
             buttonAdd.Click += buttonAdd_Click;
             // 
             // buttonRemove
             // 
-            buttonRemove.Location = new Point(150, 110);
+            buttonRemove.Location = new Point(150, 150);
             buttonRemove.Name = "buttonRemove";
             buttonRemove.Size = new Size(75, 35);
-            buttonRemove.TabIndex = 5;
+            buttonRemove.TabIndex = 7;
             buttonRemove.Text = "Remove";
             buttonRemove.Click += buttonRemove_Click;
             // 
             // buttonEdit
             // 
-            buttonEdit.Location = new Point(250, 110);
+            buttonEdit.Location = new Point(250, 150);
             buttonEdit.Name = "buttonEdit";
             buttonEdit.Size = new Size(75, 35);
-            buttonEdit.TabIndex = 6;
+            buttonEdit.TabIndex = 8;
             buttonEdit.Text = "Edit";
             buttonEdit.Click += buttonEdit_Click;
             // 
@@ -103,17 +124,18 @@
             // 
             listBoxTasks.FormattingEnabled = true;
             listBoxTasks.ItemHeight = 25;
-            listBoxTasks.Location = new Point(50, 168);
+            listBoxTasks.Location = new Point(50, 208);
             listBoxTasks.Name = "listBoxTasks";
             listBoxTasks.Size = new Size(300, 179);
-            listBoxTasks.TabIndex = 7;
+            listBoxTasks.TabIndex = 9;
             listBoxTasks.SelectedIndexChanged += listBoxTasks_SelectedIndexChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 380);
+            ClientSize = new Size(400, 480);
+
             Controls.Add(textBoxTask);
             Controls.Add(dateTimePickerDeadline);
             Controls.Add(labelTask);
@@ -122,6 +144,8 @@
             Controls.Add(buttonRemove);
             Controls.Add(buttonEdit);
             Controls.Add(listBoxTasks);
+            Controls.Add(labelSound);
+            Controls.Add(comboBoxSound);
             Name = "Form1";
             Text = "To-Do List Manager";
             ResumeLayout(false);
@@ -132,10 +156,12 @@
         private DateTimePicker dateTimePickerDeadline;
         private Label labelTask;
         private Label labelDeadline;
+        private Label labelSound;
         private Button buttonAdd;
         private Button buttonRemove;
         private Button buttonEdit;
         private ListBox listBoxTasks;
+        private ComboBox comboBoxSound;
         #endregion
     }
 }
